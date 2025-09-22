@@ -4,12 +4,11 @@ import jwt
 from fastapi import Depends, HTTPException, status
 from typing import Annotated
 
-from .config import SECRET_KEY, ALGORITHM
+from .config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 from .dependencies import get_user_crud
 from app.modules.users.crud import UserCrud
 
 
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/token")
 
 
