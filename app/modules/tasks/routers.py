@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from typing import Annotated
 
-from .crud import Task_Crud
+from .crud import TaskCrud
 from app.modules.users.crud import UserCrud
 from app.modules.users.models import User
 from .schemas import TaskIn, TaskOut, TaskUpdate
@@ -14,7 +14,7 @@ tasks_router = APIRouter()
 
 @tasks_router.get("/", response_model=list[TaskOut], status_code=status.HTTP_200_OK)
 async def get_user_tasks(
-    task_crud: Annotated[Task_Crud, Depends(get_task_crud)],
+    task_crud: Annotated[TaskCrud, Depends(get_task_crud)],
     user_crud: Annotated[UserCrud, Depends(get_user_crud)],
     current_user: Annotated[User, Depends(get_current_user)],
     skip: Annotated[int, Query(ge=0)] = 0,
@@ -36,7 +36,7 @@ async def get_user_tasks(
 @tasks_router.get("/{task_id}", response_model=TaskOut, status_code=status.HTTP_200_OK)
 async def get_task(
     task_id: int,
-    task_crud: Annotated[Task_Crud, Depends(get_task_crud)],
+    task_crud: Annotated[TaskCrud, Depends(get_task_crud)],
     current_user: Annotated[User, Depends(get_current_user)]
 ):
     '''
@@ -60,7 +60,7 @@ async def get_task(
 @tasks_router.post("/", response_model=TaskOut, status_code=status.HTTP_201_CREATED)
 async def create_task(
     task: TaskIn,
-    task_crud: Annotated[Task_Crud, Depends(get_task_crud)],
+    task_crud: Annotated[TaskCrud, Depends(get_task_crud)],
     user_crud: Annotated[UserCrud, Depends(get_user_crud)],
     current_user: Annotated[User, Depends(get_current_user)]
 ):
@@ -80,7 +80,7 @@ async def create_task(
 @tasks_router.patch("/{task_id}", response_model=TaskOut, status_code=status.HTTP_200_OK)
 async def update_task(
     task_id: int, task_update: TaskUpdate,
-    task_crud: Annotated[Task_Crud, Depends(get_task_crud)],
+    task_crud: Annotated[TaskCrud, Depends(get_task_crud)],
     current_user: Annotated[User, Depends(get_current_user)]
 ):
     '''
@@ -110,7 +110,7 @@ async def update_task(
 @tasks_router.delete("/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_task(
     task_id: int,
-    task_crud: Annotated[Task_Crud, Depends(get_task_crud)],
+    task_crud: Annotated[TaskCrud, Depends(get_task_crud)],
     current_user: Annotated[User, Depends(get_current_user)]
 ):
     '''

@@ -4,7 +4,7 @@ from fastapi import Depends
 
 from .database import async_session_maker
 from app.modules.users.crud import UserCrud
-from app.modules.tasks.crud import Task_Crud
+from app.modules.tasks.crud import TaskCrud
 
 
 async def get_async_db() -> AsyncGenerator[AsyncSession, None]:
@@ -22,8 +22,8 @@ def get_user_crud(db: Annotated[UserCrud, Depends(get_async_db)]) -> UserCrud:
     return UserCrud(db)
 
 
-def get_task_crud(db: Annotated[Task_Crud, Depends(get_async_db)]) -> Task_Crud:
+def get_task_crud(db: Annotated[TaskCrud, Depends(get_async_db)]) -> TaskCrud:
     '''
     Возвращает экземпляр Task_Crud-класса для работы с задачами.
     '''
-    return Task_Crud(db)
+    return TaskCrud(db)

@@ -5,7 +5,7 @@ from .models import Task
 from .schemas import TaskIn
 
 
-class Task_Crud:
+class TaskCrud:
     def __init__(self, db: AsyncSession):
         self.db = db
 
