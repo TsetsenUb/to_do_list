@@ -9,10 +9,7 @@ from app.core.security import verify_password
 from app.core.auth import create_access_token
 
 
-users_router = APIRouter(
-    prefix="/users",
-    tags=["users"]
-)
+users_router = APIRouter()
 
 
 @users_router.get('/{user_id}', response_model=UserOut, status_code=status.HTTP_200_OK)
@@ -44,10 +41,10 @@ async def create_user(user: UserIn, user_crud: Annotated[UserCrud, Depends(get_u
     return new_user
 
 
-@users_router.post("/token")
+@users_router.post("/token", status_code=status.HTTP_200_OK)
 async def login(
     user_crud: Annotated[UserCrud, Depends(get_user_crud)],
-    form_data: OAuth2PasswordRequestForm = Depends()
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
 ):
     """
     Аутентифицирует пользователя и возвращает JWT с email и id.

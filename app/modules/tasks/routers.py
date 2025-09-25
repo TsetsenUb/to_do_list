@@ -9,10 +9,7 @@ from app.core.dependencies import get_task_crud, get_user_crud
 from app.core.auth import get_current_user
 
 
-tasks_router = APIRouter(
-    prefix="/tasks",
-    tags=["tasks"]
-)
+tasks_router = APIRouter()
 
 
 @tasks_router.get("/", response_model=list[TaskOut], status_code=status.HTTP_200_OK)

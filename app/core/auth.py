@@ -9,7 +9,7 @@ from .dependencies import get_user_crud
 from app.modules.users.crud import UserCrud
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/users/token")
 
 
 def create_access_token(data: dict):
@@ -51,5 +51,4 @@ async def get_current_user(
     user = await user_crud.check_user_email(email)
     if not user or user.is_active is False:
         raise credentials_exception
-    print("!!!", user.id, type(user.id))
     return user
