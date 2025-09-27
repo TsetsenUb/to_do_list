@@ -40,17 +40,13 @@ async def client(db_session):
         finally:
             await db_session.close()
 
-    original_dependency = app.dependency_overrides.get(get_async_db)
     app.dependency_overrides[get_async_db] = _get_async_db_override
 
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://testserver") as client:
         yield client
 
-    if original_dependency:
-        app.dependency_overrides[get_async_db] = original_dependency
-    else:
-        app.dependency_overrides.pop(get_async_db, None)
+    app.dependency_overrides.clear()
 
 
 @pytest_asyncio.fixture
