@@ -20,7 +20,7 @@ class TaskBase(BaseModel):
 
 
 class TaskIn(TaskBase):
-    '''Схема для создания или обновления задачи'''
+    '''Схема для создания задачи'''
     title: str = Field(..., min_length=1, max_length=255, description="Заголовок задачи")
     status: TaskStatus = Field(TaskStatus.PENDING, description="Статус задачи")
     priority: TaskPriority = Field(TaskPriority.MEDIUM, description="Приоритет выполнения задачи")

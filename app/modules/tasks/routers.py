@@ -23,12 +23,6 @@ async def get_user_tasks(
     '''
     Возвращает активные задачи пользователя
     '''
-    db_user = await user_crud.get_user(current_user.id)
-    if not db_user:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Активный пользователь с ID: {current_user.id} не найден"
-        )
     user_tasks = await task_crud.get_user_tasks(current_user.id, skip, limit)
     return user_tasks
 
@@ -67,12 +61,6 @@ async def create_task(
     '''
     Создает новую задачу
     '''
-    db_user = await user_crud.get_user(current_user.id)
-    if not db_user:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Активный пользователь с ID: {current_user.id} не найден"
-        )
     new_task = await task_crud.create_task(task, current_user.id)
     return new_task
 
