@@ -7,11 +7,9 @@ from app.main import app
 from app.core.database import Base
 from app.core.dependencies import get_async_db
 from app.core.security import hash_password
+from app.core.config import TEST_DATABASE_URL
 from app.modules.users.models import User
 from app.modules.tasks.models import Task
-
-
-TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
 
 
 @pytest_asyncio.fixture
